@@ -19,6 +19,7 @@ CATEGORIAS = [
 class Despesa(models.Model):
     """Representa uma despesa financeira pessoal."""
 
+    id = models.AutoField(primary_key=True)
     descricao = models.CharField("Descrição", max_length=200)
     valor = models.DecimalField(
         "Valor (R$)",
