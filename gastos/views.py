@@ -1,5 +1,3 @@
-"""Views do app de gastos."""
-
 from decimal import Decimal
 
 from django.contrib import messages
@@ -7,6 +5,8 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
+from .models import Gasto # type: ignore
+from .services import buscar_cotacoes   # corrigido: com "s"
 from .forms import DespesaForm
 from .models import CATEGORIAS, Despesa
 
@@ -33,6 +33,11 @@ def index(request):
         if subtotal > 0:
             resumo.append({"nome": nome, "total": subtotal})
 
+    # Cotações da API
+    cotacoes = buscar_cotacoes()
+    total_usd = round(total / Decimal(str(cotacoes["dolar"])), 2) if cotacoes else None
+    total_eur = round(total / Decimal(str(cotacoes["euro"])), 2) if cotacoes else None
+
     context = {
         "despesas": despesas,
         "total": total,
@@ -40,6 +45,9 @@ def index(request):
         "categorias": CATEGORIAS,
         "categoria_filtro": categoria_filtro,
         "mes_atual": timezone.now().strftime("%B de %Y"),
+        "cotacoes": cotacoes,       # adicionado
+        "total_usd": total_usd,     # adicionado
+        "total_eur": total_eur,     # adicionado
     }
     return render(request, "gastos/index.html", context)
 

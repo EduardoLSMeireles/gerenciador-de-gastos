@@ -39,6 +39,43 @@
     </div>
 </div>
 
+<!-- 💱 Cotações do Dia -->
+<div class="card mb-4 border-0 bg-light">
+    <div class="card-body">
+        <h6 class="card-title fw-semibold mb-3">💱 Cotações do Dia</h6>
+        {% if cotacoes %}
+        <div class="row g-2">
+            <div class="col-6 col-md-3">
+                <div class="border rounded p-2 text-center bg-white">
+                    <small class="text-muted d-block">Dólar (USD)</small>
+                    <strong>R$ {{ cotacoes.dolar }}</strong>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border rounded p-2 text-center bg-white">
+                    <small class="text-muted d-block">Euro (EUR)</small>
+                    <strong>R$ {{ cotacoes.euro }}</strong>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border rounded p-2 text-center bg-white">
+                    <small class="text-muted d-block">Total em USD</small>
+                    <strong>$ {{ total_usd|floatformat:2 }}</strong>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="border rounded p-2 text-center bg-white">
+                    <small class="text-muted d-block">Total em EUR</small>
+                    <strong>€ {{ total_eur|floatformat:2 }}</strong>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="text-muted mb-0"><small>⚠️ Cotações indisponíveis no momento.</small></p>
+        {% endif %}
+    </div>
+</div>
+
 <!-- Filtro e Ações -->
 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
     <form method="get" class="d-flex gap-2 align-items-center">
