@@ -1,5 +1,3 @@
-"""Modelos do app de gastos."""
-
 from decimal import Decimal
 
 from django.core.validators import MinValueValidator
@@ -34,6 +32,11 @@ class Despesa(models.Model):
         default="outros",
     )
     data = models.DateField("Data")
+    observacao = models.TextField(
+        "Observação",
+        blank=True,
+        default="",
+    )
     criado_em = models.DateTimeField("Criado em", auto_now_add=True)
 
     class Meta:
@@ -41,7 +44,7 @@ class Despesa(models.Model):
         verbose_name = "Despesa"
         verbose_name_plural = "Despesas"
 
-    def __str__(self):
+    def str(self):
         return f"{self.descricao} — R$ {self.valor:.2f}"
 
     def get_categoria_display_label(self):
